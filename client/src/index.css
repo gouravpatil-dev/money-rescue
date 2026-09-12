@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+body { -webkit-font-smoothing: antialiased; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #26264A; border-radius: 8px; }
+
+@layer components {
+  .card { @apply bg-card border border-border rounded-xl2 p-5; }
+  .stat-card { @apply bg-card border border-border rounded-xl2 p-4 px-5; }
+  .stat-label { @apply text-xs text-muted font-semibold mb-2; }
+  .stat-value { @apply text-2xl font-bold tracking-tight; }
+  .card-title { @apply text-[12.5px] font-bold uppercase tracking-wide text-muted mb-2.5; }
+
+  .btn { @apply inline-flex items-center gap-2 bg-card border border-border text-text px-4 py-2 rounded-lg text-sm font-semibold hover:bg-cardHover transition; }
+  .btn-primary { @apply bg-accent border-accent text-bg hover:bg-[#9c80ff]; }
+  .btn-ghost { @apply bg-transparent border-transparent text-muted hover:bg-card hover:text-text; }
+  .btn-danger { @apply text-bad; }
+  .btn-sm { @apply px-2.5 py-1.5 text-xs rounded-md; }
+
+  .field-input { @apply bg-bgElevated border border-border text-text px-3 py-2 rounded-lg text-sm w-full focus:outline-none focus:border-accent; }
+  .field-label { @apply text-xs text-muted font-semibold mb-1.5 block; }
+
+  .pill { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold; }
+  .pill-cat { @apply bg-accent/10 text-accent; }
+  .pill-good { @apply bg-good/10 text-good; }
+  .pill-warn { @apply bg-warn/10 text-warn; }
+  .pill-bad { @apply bg-bad/10 text-bad; }
+  .pill-muted { @apply bg-white/5 text-muted; }
+
+  .empty-state { @apply border border-dashed border-border rounded-xl2 p-10 text-center text-muted bg-white/[0.01]; }
+
+  .navitem { @apply flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13.5px] font-medium text-muted mb-0.5 hover:bg-card hover:text-text transition cursor-pointer; }
+  .navitem.active { @apply bg-accent/10 text-accent font-semibold; }
+
+  .bar-track { @apply h-2 rounded-full bg-bgElevated overflow-hidden; }
+  .bar-fill { @apply h-full rounded-full bg-gradient-to-r from-accent to-accent2; }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "money-rescue",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Money Rescue \u2014 a privacy-first personal finance app for you and your family.",
+  "scripts": {
+    "install:all": "npm install",
+    "dev": "concurrently -n SERVER,CLIENT -c blue,green \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "start": "npm run start --prefix server",
+    "postinstall": "npm install --prefix server && npm install --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

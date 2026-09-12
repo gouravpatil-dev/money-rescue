@@ -1,0 +1,8 @@
+node_modules/
+dist/
+server/money-rescue.db
+server/money-rescue.db-*
+server/sessions.db
+server/.env
+.DS_Store
+*.log
