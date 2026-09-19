@@ -1,5 +1,10 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
+
+const DATA_DIR = process.env.DATA_DIR || __dirname;
+
+fs.mkdirSync(DATA_DIR, { recursive: true });
 
 const db = new Database(path.join(__dirname, 'money-rescue.db'));
 db.pragma('journal_mode = WAL');

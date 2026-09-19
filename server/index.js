@@ -13,17 +13,21 @@ const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'dev-secret-change-me';
 
 const app = express();
+app.set('trust proxy', 1);
 app.use(express.json({ limit: '5mb' }));
 app.use(cors({ origin: CLIENT_ORIGIN, credentials: true }));
 app.use(session({
-  store: new SQLiteStore({ db: 'sessions.db', dir: __dirname }),
+  store: new SQLiteStore({
+    db: 'sessions.db',
+    dir: process.env.DATA_DIR || __dirname,
+  }),  
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
     sameSite: 'lax',
-    secure: false, // set true if serving over HTTPS in production
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
   },
   // Sessions are stored in server/sessions.db (SQLite), so you stay logged in
