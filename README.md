@@ -108,5 +108,5 @@ The app now includes a dedicated **Money Rescue Plan** at `/rescue`, built on th
 - Recurring-payment commitment summary
 - Spending priorities that surface discretionary categories to review first
 
-These are planning/analysis features and do not provide investment or financial advice.
+These are analysis features and do not provide investment or financial advice.
 
