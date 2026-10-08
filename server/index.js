@@ -11,6 +11,7 @@ const { requireAuth } = require('./middleware/auth');
 const PORT = process.env.PORT || 4000;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'dev-secret-change-me';
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 const app = express();
 app.set('trust proxy', 1);
@@ -20,18 +21,16 @@ app.use(session({
   store: new SQLiteStore({
     db: 'sessions.db',
     dir: process.env.DATA_DIR || __dirname,
-  }),  
+  }),
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+    sameSite: IS_PRODUCTION ? 'none' : 'lax',
+    secure: IS_PRODUCTION,
+    maxAge: 1000 * 60 * 60 * 24 * 30,
   },
-  // Sessions are stored in server/sessions.db (SQLite), so you stay logged in
-  // across server restarts — no need to sign in again every time you run the app.
 }));
 
 app.use('/api/auth', require('./routes/auth'));
@@ -47,7 +46,6 @@ app.use('/api/backup', requireAuth, require('./routes/backup'));
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 
-// Serve the built React app if present (production-ish mode: `npm run build --prefix client && npm start`)
 const clientDist = path.join(__dirname, '..', 'client', 'dist');
 if (fs.existsSync(clientDist)) {
   app.use(express.static(clientDist));
@@ -58,5 +56,5 @@ if (fs.existsSync(clientDist)) {
 }
 
 app.listen(PORT, () => {
-  console.log(`Money Rescue API listening on http://localhost:${PORT}`);
+  console.log(`Money Rescue API listening on port ${PORT}`);
 });
