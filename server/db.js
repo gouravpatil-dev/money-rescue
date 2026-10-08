@@ -6,7 +6,7 @@ const DATA_DIR = process.env.DATA_DIR || __dirname;
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
-const db = new Database(path.join(__dirname, 'money-rescue.db'));
+const db = new Database(path.join(DATA_DIR, 'money-rescue.db'));
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS transactions (
   description TEXT,
   merchant TEXT,
   amount REAL,
-  type TEXT,               -- 'debit' | 'credit'
+  type TEXT,
   category TEXT,
   confidence INTEGER,
-  flag TEXT,                -- null | transfer | refund | atm | income | investment
+  flag TEXT,
   account TEXT,
-  tags TEXT DEFAULT '[]',   -- JSON array
+  tags TEXT DEFAULT '[]',
   notes TEXT DEFAULT '',
   recurring INTEGER DEFAULT 0,
   source TEXT,
@@ -98,7 +98,7 @@ CREATE INDEX IF NOT EXISTS idx_goals_user ON goals(user_id);
 CREATE TABLE IF NOT EXISTS networth_items (
   id TEXT PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  kind TEXT NOT NULL,      -- 'asset' | 'liability'
+  kind TEXT NOT NULL,
   name TEXT,
   amount REAL
 );
